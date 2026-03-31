@@ -8,7 +8,7 @@ export default function Login(){
 
   const handleLogin = async () => {
 
-    const res = await api.post("/login",{
+    const res = await api.post("/auth/login",{
       email,
       password
     })

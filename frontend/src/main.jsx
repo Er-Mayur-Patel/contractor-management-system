@@ -8,3 +8,7 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+import { Toaster } from "react-hot-toast"
+
+<Toaster position="top-right" />

@@ -60,14 +60,11 @@ export default function Sidebar() {
         </div>
 
         {/* Sites */}
-        <div
-          onClick={() => navigate("/sites")}
-          className="flex items-center gap-3 cursor-pointer hover:text-indigo-300"
-        >
+        <div onClick={() => navigate("/sites")}
+            className="flex items-center gap-3 cursor-pointer hover:text-indigo-300">
           <Building2 size={20}/>
           Sites
         </div>
-
         {/* Attendance */}
         <div
           onClick={() => navigate("/attendance")}

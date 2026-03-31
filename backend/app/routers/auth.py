@@ -1,23 +1,43 @@
-from fastapi import APIRouter
-from app.core.security import create_access_token
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi_utils.cbv import cbv
+from sqlalchemy.orm import Session
 
-router = APIRouter()
+from app.database import SessionLocal
+from app.models.user import User
+from app.utils.auth import verify_password, create_token
 
-fake_user = {
-    "email": "admin@test.com",
-    "password": "123456"
-}
+router = APIRouter(prefix="/auth", tags=["Auth"])
 
-@router.post("/login")
-def login(data: dict):
 
-    if data["email"] == fake_user["email"] and data["password"] == fake_user["password"]:
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-        token = create_access_token({"email": data["email"]})
+
+@cbv(router)
+class AuthView:
+
+    db: Session = Depends(get_db)
+
+    @router.post("/login")
+    def login(self, data: dict):
+
+        user = self.db.query(User).filter(
+            User.email == data.get("email")
+        ).first()
+
+        if not user:
+            raise HTTPException(status_code=400, detail="User not found")
+
+        if not verify_password(data.get("password"), user.password):
+            raise HTTPException(status_code=400, detail="Wrong password")
+
+        token = create_token({"user_id": user.id})
 
         return {
             "access_token": token,
             "token_type": "bearer"
         }
-
-    return {"error": "Invalid credentials"}
