@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float
 from app.database import Base
+from sqlalchemy.orm import relationship
+from app.models.site import site_worker
 
 class Worker(Base):
 
@@ -9,3 +11,5 @@ class Worker(Base):
     name = Column(String)
     phone = Column(String)
     hourly_rate = Column(Float)
+
+    sites = relationship("Site", secondary="site_worker", back_populates="workers")

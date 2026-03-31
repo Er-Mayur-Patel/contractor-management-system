@@ -6,6 +6,9 @@ import DashboardLayout from "./layouts/DashboardLayout"
 
 import WorkersList from "./pages/Workers/WorkersList"
 import CreateWorker from "./pages/Workers/CreateWorker"
+import SitesList from "./pages/Sites/SitesList";
+import CreateSite from "./pages/sites/CreateSite";
+import EditSite from "./pages/sites/EditSite";
 
 function App() {
 
@@ -21,11 +24,16 @@ function App() {
         {/* Dashboard Layout */}
         <Route element={<DashboardLayout />}>
 
-          <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* Workers Routes */}
-          <Route path="/workers/list" element={<WorkersList />} />
-          <Route path="/workers/create" element={<CreateWorker />} />
+        {/* Workers Routes */}
+        <Route path="/workers/list" element={<WorkersList />} />
+        <Route path="/workers/create" element={<CreateWorker />} />
+
+         {/* Sites */}
+        <Route path="/sites" element={<SitesList />} />
+        <Route path="/sites/create" element={<CreateSite />} />
+        <Route path="/sites/edit/:id" element={<EditSite />} />
 
         </Route>
 
